@@ -1,9 +1,9 @@
 name: Deploy Website
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
@@ -14,18 +14,21 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Calculate Modified Files
-      run: |
-        mkdir modified_files
-        git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }} > modified_files/files.txt
+    - name: Install LFTP
+      run: sudo apt-get install lftp -y
 
-    - name: Deploy Website
-      uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
+    - name: Setup FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        ftp_host: ${{ secrets.FTP_SERVER }}
-        ftp_username: ${{ secrets.FTP_USERNAME }}
-        ftp_password: ${{ secrets.FTP_PASSWORD }}
-        local_source_dir: "modified_files"
-        dist_target_dir: "/httpdocs"
-        delete: "true"
-        exclude: "'^logs/' '^README.md'"
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        exclude: |
+          **/.git*
+          **/.git*/**
+          README.md
+        server-dir: '/httpdocs/' # Le chemin sur le serveur où vous souhaitez déployer le site
+
+    - name: Upload Website
+      run: |
+        lftp -c "set ftp:ssl-allow no; set ssl:verify-certificate no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_SERVER }}; mirror --reverse --delete --verbose . /httpdocs/"

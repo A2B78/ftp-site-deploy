@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Install LFTP
       run: sudo apt-get install lftp -y
@@ -31,4 +31,4 @@ jobs:
 
     - name: Upload Website
       run: |
-        lftp -c "set ftp:ssl-allow no; set ssl:verify-certificate no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_SERVER }}; mirror --reverse --delete --verbose . /httpdocs/"
+        lftp -c "set ftp:ssl-allow no; set ssl:verify-certificate no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_SERVER }}; mirror --reverse --delete --verbose --exclude 'site/' . /httpdocs/"

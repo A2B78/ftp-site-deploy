@@ -1,9 +1,9 @@
 name: Deploy Website
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
@@ -14,18 +14,13 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Calculate Modified Files
-      run: |
-        mkdir modified_files
-        git diff --name-only ${{ github.event.before }} ${{ github.sha }} > modified_files/files.txt
-
     - name: Deploy Website
       uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
       with:
         ftp_host: ${{ secrets.FTP_SERVER }}
         ftp_username: ${{ secrets.FTP_USERNAME }}
         ftp_password: ${{ secrets.FTP_PASSWORD }}
-        local_source_dir: "modified_files"
+        local_source_dir: "site"
         dist_target_dir: "/httpdocs"
         delete: "true"
         exclude: "'^logs/' '^README.md'"

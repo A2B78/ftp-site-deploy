@@ -26,10 +26,9 @@ jobs:
         exclude: |
           **/.git*
           **/.git*/**
-          README.md          
-        server-dir: '/httpdocs/'
+          README.md
+        server-dir: '/httpdocs/' # Le chemin sur le serveur où vous souhaitez déployer le site
 
     - name: Upload Website
       run: |
-        # cd site
-        lftp -c "set ftp:ssl-allow no; set ssl:verify-certificate no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_SERVER }}; mirror --reverse --delete --verbose . /"
+        lftp -c "set ftp:ssl-allow no; set ssl:verify-certificate no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_SERVER }}; mirror --reverse --delete --verbose . /httpdocs/"

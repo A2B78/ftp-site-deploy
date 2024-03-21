@@ -1,0 +1,27 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main # Déclencher l'action lorsque vous poussez vers la branche principale (changement de nom si nécessaire)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: ${{ secrets.FTP_SERVER }} # Ajoutez votre serveur FTP dans les secrets de votre référentiel
+        username: ${{ secrets.FTP_USERNAME }} # Ajoutez votre nom d'utilisateur FTP dans les secrets de votre référentiel
+        password: ${{ secrets.FTP_PASSWORD }} # Ajoutez votre mot de passe FTP dans les secrets de votre référentiel
+        server-dir: '/httpdocs' # Spécifiez le répertoire sur le serveur FTP où vous souhaitez déployer votre site
+
+    - name: Upload Website
+      run: |
+        cd site
+        lftp -c "set ftp:ssl-allow no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_SERVER }}; mirror --reverse --delete --verbose . /"

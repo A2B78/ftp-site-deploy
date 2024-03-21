@@ -3,7 +3,7 @@ name: Deploy Website build to FTP
 on:
   push:
     tags:
-      - 'v*'
+      - "v*.*"
 
 jobs:
   deploy:

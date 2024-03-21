@@ -19,7 +19,7 @@ jobs:
         server: ${{ secrets.FTP_SERVER }} # Ajoutez votre serveur FTP dans les secrets de votre référentiel
         username: ${{ secrets.FTP_USERNAME }} # Ajoutez votre nom d'utilisateur FTP dans les secrets de votre référentiel
         password: ${{ secrets.FTP_PASSWORD }} # Ajoutez votre mot de passe FTP dans les secrets de votre référentiel
-        server-dir: '/httpdocs' # Spécifiez le répertoire sur le serveur FTP où vous souhaitez déployer votre site
+        server-dir: '/httpdocs/' # Spécifiez le répertoire sur le serveur FTP où vous souhaitez déployer votre site
 
     - name: Upload Website
       run: |

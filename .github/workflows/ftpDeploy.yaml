@@ -17,7 +17,7 @@ jobs:
     - name: Calculate Modified Files
       run: |
         mkdir modified_files
-        git diff --name-only ${{ github.event.before }} ${{ github.sha }} > modified_files/files.txt
+        git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }} > modified_files/files.txt
 
     - name: Deploy Website
       uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1

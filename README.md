@@ -6,7 +6,7 @@ Ce dépôt contient un workflow GitHub Actions pour automatiser le déploiement 
 
 ### Déclencheurs
 
-Le déploiement est déclenché automatiquement lorsqu'un push est effectué sur la branche `main`. Vous pouvez également déclencher manuellement le déploiement en utilisant l'option "Run workflow" dans l'interface des workflows GitHub.
+Le déploiement est déclenché automatiquement lorsqu'un push est effectué sur un tag `v.*.*`. Vous pouvez également déclencher manuellement le déploiement en utilisant l'option "Run workflow" dans l'interface des workflows GitHub.
 
 ### Secrets
 
@@ -28,7 +28,7 @@ Le déploiement est automatisé à l'aide de GitHub Actions. Voici les étapes p
 
 Pour utiliser ce workflow dans votre propre projet, suivez ces étapes :
 
-1. Créez un fichier similaire `main.yml` dans le répertoire `.github/workflows` de votre dépôt.
+1. Créez un fichier similaire `ftpDeploy.yml` dans le répertoire `.github/workflows` de votre dépôt.
 2. Configurez les secrets `FTP_SERVER`, `FTP_USERNAME` et `FTP_PASSWORD` dans les paramètres secrets de votre dépôt.
 3. Personnalisez le chemin du répertoire local à déployer et le répertoire cible sur le serveur FTP dans le fichier YAML du workflow si nécessaire.
 
@@ -36,6 +36,3 @@ Pour utiliser ce workflow dans votre propre projet, suivez ces étapes :
 
 Ce workflow GitHub Actions a été créé par [A2B78](https://github.com/A2B78/ftp-site-deploy.git).
 
-## Licence
-
-Ce projet est sous licence [MIT](LICENSE).

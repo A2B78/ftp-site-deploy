@@ -6,7 +6,7 @@ Ce dépôt contient un workflow GitHub Actions pour automatiser le déploiement 
 
 ### Déclencheurs
 
-Le déploiement est déclenché automatiquement lorsqu'un push est effectué sur un tag `v.*.*`. Vous pouvez également déclencher manuellement le déploiement en utilisant l'option "Run workflow" dans l'interface des workflows GitHub.
+Le déploiement est déclenché automatiquement lorsqu'un push est effectué sur un tag `v*.*`. Vous pouvez également déclencher manuellement le déploiement en utilisant l'option "Run workflow" dans l'interface des workflows GitHub.
 
 ### Secrets
 
